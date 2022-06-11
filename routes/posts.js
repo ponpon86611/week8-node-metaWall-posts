@@ -23,6 +23,6 @@ router.delete('/posts', handleErrorAsync(postsController.deletePostAll));
 router.delete('/posts/:id', handleErrorAsync(postsController.deletePostOne));
 
 //修改貼文
-router.patch('/posts/:id', handleErrorAsync(postsController.patchPost));
+router.patch('/posts/:id', isAuth, handleErrorAsync(postsController.patchPost));
 
 module.exports = router;
