@@ -6,6 +6,7 @@ const appError = require('../services/appError');
 const mongoose = require('mongoose');
 
 const postController = {
+    //取得所有貼文
      async getPosts(req, res, next) {
         //排序，預設為 DESC(由新到舊)，若網址有帶上 timeSort=asc 則為 ASC (由舊到新)
         const timeSort = req.query.timeSort == "asc" ? "createAt":"-createAt"
@@ -16,6 +17,7 @@ const postController = {
         }).sort(timeSort);
         resHandler.successHandler(res, posts, 200);
     },
+    //新增貼文
      async addPost(req, res, next) {
         const newPost = req.body;
         if(!newPost.user || !newPost.content ){ 
@@ -36,12 +38,14 @@ const postController = {
         const post = await Post.create(newPost);
         resHandler.successHandler(res, '貼文新增成功', 200);
     },
+    //刪除所有貼文
     async deletePostAll(req, res, next) {
         if(req.url === '/posts/') return appError(404, `無此頁面...`, next);
         await Post.deleteMany({});
         // const posts = await Post.find();
         resHandler.successHandler(res, [], 200); 
     },
+    //刪除單筆貼文
      async deletePostOne(req, res, next) {
         //須考慮到傳入不存在的id 或是 不符合格式的id EX: 125drg
         const deletePostId = req.params.id;
@@ -59,6 +63,7 @@ const postController = {
             return appError(400, `刪除貼文失敗，該貼文不存在`, next);
         }    
     },
+    //修改貼文
      async patchPost(req, res, next) {
         // const updatePost = req.body;
         const {content, image} = req.body;
