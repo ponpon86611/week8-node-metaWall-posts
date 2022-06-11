@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const postsController = require('../controller/postsConteoller');
 const handleErrorAsync = require('../services/handleErrorAsync');
+const {isAuth} = require('../services/auth');
 
 //取得所有貼文
 router.get('/posts', handleErrorAsync(postsController.getPosts));
 
 //新增貼文
-router.post('/posts', handleErrorAsync(postsController.addPost));
+router.post('/posts',isAuth, handleErrorAsync(postsController.addPost));
 
 //刪除所有貼文
 router.delete('/posts', handleErrorAsync(postsController.deletePostAll));
