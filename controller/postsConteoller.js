@@ -140,6 +140,50 @@ const postController = {
             // posts is null 代表傳入符合格式的16進制的id，但不存在於DB中，故會回傳null
             return appError(400, '修改貼文失敗，該貼文不存在', next);
         }       
+    },
+    //新增一則貼文的讚
+    async addPostLike(req, res, next) {
+        const postId = req.params.id;
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(postId)) {
+            return appError(400, `貼文ID格式不符`, next);
+        }
+
+        //確認是否有該user， res: null 不存在
+        const postExist = await Post.findById(postId).exec();
+        if(!postExist) {
+            return appError(400, '貼文 ID 不存在!', next);
+        }
+
+        await Post.findOneAndUpdate(
+            {_id: postId}, //key一定要用 _id，否則會報出 MongoServerError: Cannot apply $addToSet to non-array field. Field named 'likes' has non-array type int
+            {
+                $addToSet: {likes: req.user.id}
+            }
+        );
+
+        resHandler.successHandler(res, {postId, userId: req.user.id}, 201);
+    },
+    //取消一則貼文的讚
+    async deletePostLike(req, res, next) {
+        const postId = req.params.id;
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(postId)) {
+            return appError(400, `貼文ID格式不符`, next);
+        }
+
+        //確認是否有該user， res: null 不存在
+        const postExist = await Post.findById(postId).exec();
+        if(!postExist) {
+            return appError(400, '貼文 ID 不存在!', next);
+        }
+
+        await Post.findOneAndUpdate(
+            {_id: postId},
+            {$pull: {likes: req.user.id}}
+        )
+
+        resHandler.successHandler(res, {postId, userId: req.user.id}, 201);
     }
 }
 

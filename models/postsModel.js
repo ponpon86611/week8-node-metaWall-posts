@@ -33,10 +33,12 @@ const postsSchema = new mongoose.Schema(
             type: String,
             required: [true, postMessage.content.validError]
         },
-        likes: {
-            type: Number,
-            default: 0
-        }
+        likes: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'user'
+            }
+        ],
     },
     {
         versionKey: false

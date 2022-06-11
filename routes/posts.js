@@ -25,4 +25,10 @@ router.delete('/posts/:id', handleErrorAsync(postsController.deletePostOne));
 //修改貼文
 router.patch('/posts/:id', isAuth, handleErrorAsync(postsController.patchPost));
 
+//新增一則貼文的讚
+router.post('/posts/:id/like', isAuth, handleErrorAsync(postsController.addPostLike));
+
+//取消一則貼文的讚
+router.delete('/posts/:id/unlike', isAuth, handleErrorAsync(postsController.deletePostLike));
+
 module.exports = router;
