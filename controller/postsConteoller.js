@@ -83,7 +83,7 @@ const postController = {
         }
 
         const post = await Post.create({content, user, imgUrl});
-        resHandler.successHandler(res, '貼文新增成功', 200);
+        resHandler.successHandler(res, post, 200);
     },
     //刪除所有貼文
     async deletePostAll(req, res, next) {
