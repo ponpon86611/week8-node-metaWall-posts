@@ -65,23 +65,24 @@ const postController = {
     },
     //新增貼文
     async addPost(req, res, next) {
-        const newPost = req.body;
-        if(!newPost.user || !newPost.content ){ 
+        // const newPost = req.body;
+        const {content, user, imgUrl} = req.body;
+        if(!user || !content ){ 
             return appError(400, 'ID與內容須填寫!', next);
         }
 
         //不符合 ObjectId 格式
-        if( ! mongoose.isObjectIdOrHexString(newPost.user)) {
+        if( ! mongoose.isObjectIdOrHexString(user)) {
             return appError(400, `ID 格式不符...`, next);
         }
 
         //確認是否有該user， res: null 不存在
-        const userInfo = await User.findById(newPost.user).exec();
+        const userInfo = await User.findById(user).exec();
         if(!userInfo) {
             return appError(400, 'ID 不存在!', next);
         }
 
-        const post = await Post.create(newPost);
+        const post = await Post.create({content, user, imgUrl});
         resHandler.successHandler(res, '貼文新增成功', 200);
     },
     //刪除所有貼文
