@@ -7,6 +7,12 @@ const {isAuth} = require('../services/auth');
 //取得所有貼文
 router.get('/posts', handleErrorAsync(postsController.getPosts));
 
+//取得單一貼文
+router.get('/posts/:id', handleErrorAsync(postsController.getSinglePost));
+
+//取得個人所有貼文列表
+router.get('/post/user/:id', isAuth, handleErrorAsync(postsController.getSelfPosts));
+
 //新增貼文
 router.post('/posts',isAuth, handleErrorAsync(postsController.addPost));
 

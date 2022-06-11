@@ -17,8 +17,54 @@ const postController = {
         }).sort(timeSort);
         resHandler.successHandler(res, posts, 200);
     },
+    //取得單一貼文
+    async getSinglePost(req, res, next) {
+        /**
+         * 1.確認貼文id是否符合格式
+         * 2.確認id是否存在於table內
+         */
+        const postId = req.params.id;
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(postId)) {
+            return appError(400, `ID 格式不符...`, next);
+        }
+
+        const postIdExist = await Post.findById(postId).exec();
+        if(!postIdExist) {
+            return appError(400, `該貼文不存在喔...`, next);
+        }
+
+        const post = await Post.findById(postId).populate({
+            path: 'user',
+            select: 'name photo'
+        })
+        resHandler.successHandler(res, post, 200);
+    },
+    async getSelfPosts(req, res, next) {
+        const userId = req.params.id;
+        /**
+         * 1.確認貼文id是否符合格式
+         * 2.確認id是否存在於table內
+         */
+        if( ! mongoose.isObjectIdOrHexString(userId)) {
+            return appError(400, `ID 格式不符...`, next);
+        }
+
+        //多一層判斷
+        if(userId !== req.user.id) {
+            //403 Forbidden  用戶端並無訪問權限，例如未被授權，所以伺服器拒絕給予應有的回應。不同於 401，伺服端知道用戶端的身份
+            return appError(403, `您沒有權限...`, next);
+        }
+
+        const selfPosts = await Post.find({user:userId}).populate({
+            path: 'user',
+            select: 'name photo'
+        });
+
+        resHandler.successHandler(res, selfPosts, 200);
+    },
     //新增貼文
-     async addPost(req, res, next) {
+    async addPost(req, res, next) {
         const newPost = req.body;
         if(!newPost.user || !newPost.content ){ 
             return appError(400, 'ID與內容須填寫!', next);
