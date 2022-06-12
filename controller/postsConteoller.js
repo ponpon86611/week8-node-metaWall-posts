@@ -86,7 +86,7 @@ const postController = {
             return appError(400, 'ID 不存在!', next);
         }
 
-        const post = await Post.create({content, user, imgUrl});
+        const post = await Post.create({content, user, image:imgUrl});
         resHandler.successHandler(res, post, 200);
     },
     //刪除所有貼文
