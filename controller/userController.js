@@ -111,6 +111,86 @@ const userController = {
             { new: true }
         )
         resHandler.successHandler(res, updateUser, 200);
+    },
+    //追蹤朋友
+    async follow(req, res, next) {  
+        const userId = req.params.id;
+        /**
+         * 1.ID格式檢查 及 是否存在
+         * 2.不能追蹤自己，故須先判斷
+         */
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(userId)) {
+            return appError(400, `ID格式不符`, next);
+        }
+
+        const userExist = await User.findById(userId).exec();
+        if( !userExist ) {
+            return appError(400, `使用者不存在喔`, next);
+        }
+
+        if(userId === req.user.id) {
+            return appError(401, `無法追蹤自己`, next);
+        }
+
+        await User.updateOne(
+            {
+                _id: req.user.id,
+                'following.user': {$ne: userId}
+            },
+            {
+                $addToSet: {following: {user: userId}}
+            }
+        );
+
+        await User.updateOne(
+            {
+                _id: userId,
+                'followers.user': {$ne: req.user.id}
+            },
+            {
+                $addToSet: { followers: {user: req.user.id}}
+            }
+        );
+
+        resHandler.successHandler(res, '已成功追蹤', 200);
+    },
+    //取消追蹤他人
+    async unfollow(req, res, next) {
+        const userId = req.params.id;
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(userId)) {
+            return appError(400, `ID格式不符`, next);
+        }
+
+        const userExist = await User.findById(userId).exec();
+        if( !userExist ) {
+            return appError(400, `使用者不存在喔`, next);
+        }
+
+        if(userId === req.user.id) {
+            return appError(401, `無法取消追蹤自己`, next);
+        }
+
+        await User.updateOne(
+            {
+                _id: req.user.id
+            },
+            {
+                $pull: {following: {user: userId}}
+            }
+        );
+
+        await User.updateOne(
+            {
+                _id: userId
+            },
+            {
+                $pull: {followers: {user: req.user.id}}
+            }
+        );
+
+        resHandler.successHandler(res, '已成功取消追蹤', 200);
     }
 }
 

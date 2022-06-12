@@ -15,4 +15,11 @@ router.get('/profile', isAuth, handleErrorAsync(userController.getProfile));
 
 router.patch('/profile', isAuth, handleErrorAsync(userController.updateProfile));
 
+//追蹤其他人
+router.post('/:id/follow', isAuth, handleErrorAsync(userController.follow));
+
+//取消追蹤他人
+router.delete('/:id/unfollow', isAuth, handleErrorAsync(userController.unfollow));
+
+
 module.exports = router;
