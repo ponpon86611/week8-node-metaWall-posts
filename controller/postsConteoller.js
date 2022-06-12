@@ -149,7 +149,7 @@ const postController = {
             return appError(400, `貼文ID格式不符`, next);
         }
 
-        //確認是否有該user， res: null 不存在
+        //確認是否有該貼文， res: null 不存在
         const postExist = await Post.findById(postId).exec();
         if(!postExist) {
             return appError(400, '貼文 ID 不存在!', next);
@@ -172,7 +172,7 @@ const postController = {
             return appError(400, `貼文ID格式不符`, next);
         }
 
-        //確認是否有該user， res: null 不存在
+        //確認是否有該貼文， res: null 不存在
         const postExist = await Post.findById(postId).exec();
         if(!postExist) {
             return appError(400, '貼文 ID 不存在!', next);
