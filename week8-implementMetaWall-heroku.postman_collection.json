@@ -1,0 +1,532 @@
+{
+	"info": {
+		"_postman_id": "3f5134dc-7117-4d83-b59d-8a19caa0d7ff",
+		"name": "week8-implementMetaWall-heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6469607"
+	},
+	"item": [
+		{
+			"name": "會員功能",
+			"item": [
+				{
+					"name": "登入會員",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter12345@gmail.com\",\r\n    \"password\": \"peter12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/sign_in",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "註冊會員",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Peter\",\r\n    \"email\": \"peter12345@gmail.com\",\r\n    \"password\": \"peter12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/sign_up",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "重設密碼",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"password\": \"sherry12345\",\r\n   \"confirmPassword\":\"sherry12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/updatePassword",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/profile",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新個人資料",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"sherry tsai Le\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/profile",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "會員按讚追蹤動態",
+			"item": [
+				{
+					"name": "追蹤朋友",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/62a5d423c341e6224c184200/follow",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"62a5d423c341e6224c184200",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤朋友",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/62a5d423c341e6224c184200/unfollow",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"62a5d423c341e6224c184200",
+								"unfollow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人按讚列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/getLikeList",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"getLikeList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人追蹤名單",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/users/following",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"following"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "動態貼文",
+			"item": [
+				{
+					"name": "取得所有貼文",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得單一貼文",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts/62a5f06939e93fcd9d5e4456",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"62a5f06939e93fcd9d5e4456"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增貼文",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": \"62a5d423c341e6224c184200\",\r\n    \"content\":\"漂亮喔~~\",\r\n    \"imgUrl\": \"https://i.imgur.com/x85t84p.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增一則貼文的讚",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts/62a5f05c39e93fcd9d5e4452/like",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"62a5f05c39e93fcd9d5e4452",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消一則貼文的讚",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts/62a5f05c39e93fcd9d5e4452/unlike",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"62a5f05c39e93fcd9d5e4452",
+								"unlike"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增一則貼文的留言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"又要上班了超煩\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/posts/62a5f05c39e93fcd9d5e4452/comment",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"62a5f05c39e93fcd9d5e4452",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人貼文所有列表 Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/post/user/62a5d359c341e6224c1841fd",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"post",
+								"user",
+								"62a5d359c341e6224c1841fd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "其他",
+			"item": [
+				{
+					"name": "上傳圖片",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTVkMzU5YzM0MWU2MjI0YzE4NDFmZCIsImlhdCI6MTY1NTAzNTAyOSwiZXhwIjoxNjU1NjM5ODI5fQ.t18ELBDYEvhBpA6X9PJkIbODPsqGHv4tnKlLvQZ-Uaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/C:/Users/Pon/Downloads/0001.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://warm-atoll-06817.herokuapp.com/upload",
+							"protocol": "https",
+							"host": [
+								"warm-atoll-06817",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
