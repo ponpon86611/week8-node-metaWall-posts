@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Post = require('../models/postsModel');
 const resHandler = require('../services/resHandler');
 const appError = require('../services/appError');
 const validator = require('validator');
@@ -191,6 +192,27 @@ const userController = {
         );
 
         resHandler.successHandler(res, '已成功取消追蹤', 200);
+    },
+    //取得個人追蹤名單
+    async getFollowing(req, res, next) {
+        const userId = req.user.id;
+        const followingList = await User.findById(userId).populate({
+            path: 'following.user',
+            select: 'name _id'
+        })
+
+        resHandler.successHandler(res, followingList, 200);
+    },
+    //取得個人按讚列表
+    async getLikeList(req, res, next) {
+        const likeList = await Post.find({
+            likes: [req.user.id]
+        }).populate({
+            path: 'user',
+            select: 'name _id'
+        });
+
+        resHandler.successHandler(res, likeList, 200);
     }
 }
 

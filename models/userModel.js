@@ -42,11 +42,11 @@ const userSchema = new mongoose.Schema(
         default: Date.now,
         select: false
       },
-      followers: [ // 別人追蹤我
+      followers: [ // 別人追蹤自己
         {
           user: {
             type: mongoose.Schema.ObjectId,
-            ref: 'User'
+            ref: 'user'
           },
           createdAt: {
             type: Date,
@@ -54,11 +54,11 @@ const userSchema = new mongoose.Schema(
           }
         }
       ],
-      following: [ //我追蹤別人
+      following: [ //追蹤別人
         {
           user: {
             type: mongoose.Schema.ObjectId,
-            ref: 'User'
+            ref: 'user'
           },
           createdAt: {
             type: Date,

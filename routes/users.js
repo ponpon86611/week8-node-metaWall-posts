@@ -21,5 +21,10 @@ router.post('/:id/follow', isAuth, handleErrorAsync(userController.follow));
 //取消追蹤他人
 router.delete('/:id/unfollow', isAuth, handleErrorAsync(userController.unfollow));
 
+//取得個人追蹤名單
+router.get('/following', isAuth, handleErrorAsync(userController.getFollowing));
+
+//取得個人按讚列表
+router.get('/getLikeList', isAuth, handleErrorAsync(userController.getLikeList));
 
 module.exports = router;
