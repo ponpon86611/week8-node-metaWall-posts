@@ -1,5 +1,6 @@
 const Post = require('../models/postsModel');
 const User = require('../models/userModel');
+const Comment = require('../models/commentsModel');
 const resHandler = require('../services/resHandler');
 const appError = require('../services/appError');
 //因本週目標是將 try catch 拿掉，故在刪除或修改時需判斷 id 是否符合 mongoDB 的 ObjectId，故引入
@@ -14,6 +15,9 @@ const postController = {
         const posts = await Post.find(searchKeyword).populate({
             path: 'user',
             select: 'name photo'
+        }).populate({
+            path: 'comments',
+            select: 'comment user'
         }).sort(timeSort);
         resHandler.successHandler(res, posts, 200);
     },
@@ -57,8 +61,8 @@ const postController = {
         }
 
         const selfPosts = await Post.find({user:userId}).populate({
-            path: 'user',
-            select: 'name photo'
+            path: 'comments',
+            select: 'comment user'
         });
 
         resHandler.successHandler(res, selfPosts, 200);
@@ -184,6 +188,33 @@ const postController = {
         )
 
         resHandler.successHandler(res, {postId, userId: req.user.id}, 201);
+    },
+    //新增一則貼文的留言
+    async addComment(req, res, next) {
+        const postId = req.params.id;
+        const { comment } = req.body;
+        if( !comment ) {
+            return appError(400, '請填寫留言內容喔', next);
+        }
+
+        //不符合 ObjectId 格式
+        if( ! mongoose.isObjectIdOrHexString(postId)) {
+            return appError(400, `ID 格式不符...`, next);
+        }
+
+        //確認是否有該user， res: null 不存在
+        const postInfo = await Post.findById(postId).exec();
+        if( !postInfo) {
+            return appError(400, `貼文不存在喔...`, next);
+        }
+
+        const newComment = await Comment.create({
+            post: postId,
+            user: req.user.id,
+            comment
+        });
+
+        resHandler.successHandler(res, newComment, 201);
     }
 }
 

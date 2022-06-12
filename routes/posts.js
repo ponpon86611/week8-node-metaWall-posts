@@ -31,4 +31,7 @@ router.post('/posts/:id/like', isAuth, handleErrorAsync(postsController.addPostL
 //取消一則貼文的讚
 router.delete('/posts/:id/unlike', isAuth, handleErrorAsync(postsController.deletePostLike));
 
+//新增一則貼文留言
+router.post('/posts/:id/comment', isAuth, handleErrorAsync(postsController.addComment));
+
 module.exports = router;
